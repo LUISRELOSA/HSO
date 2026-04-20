@@ -1,0 +1,35 @@
+@import "tailwindcss";
+@import "tailwindcss/preflight"; 
+@import "tailwindcss/utilities";  
+
+
+/* Utilities linked to CSS variables for easy styling */
+.bg-dominant { 
+  background-color: var(--dominant); 
+}
+
+.text-dominant { 
+  color: var(--dominant); 
+}
+
+.bg-secondary { 
+  background-color: var(--secondary); 
+}
+
+.text-secondary { 
+  color: var(--secondary); 
+}
+
+.bg-highlight { 
+  background-color: var(--highlight); 
+}
+
+.text-highlight { 
+  color: var(--highlight); 
+}
+
+.card-image { 
+  object-fit: cover; 
+  border-radius: 8px; 
+}
+

@@ -1,0 +1,234 @@
+
+@import "tailwindcss";
+@import "tailwindcss/preflight"; 
+@import "tailwindcss/utilities";  
+
+/* Utilities */
+.bg-dominant { background-color: var(--dominant); }
+.text-dominant { color: var(--dominant); }
+.bg-secondary { background-color: var(--secondary); }
+.text-secondary { color: var(--secondary); }
+.bg-highlight { background-color: var(--highlight); }
+.text-highlight { color: var(--highlight); }
+
+.card-image { 
+  object-fit: cover; 
+  border-radius: 8px; 
+}
+
+/* === Fonts === */
+@font-face {
+  font-family: "GothamBlack";
+  src: url("./fonts/Gotham-Black.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GothamRegular";
+  src: url("./fonts/Gotham-Regular.otf") format("opentype");
+  font-display: swap;
+}
+
+
+html, body, #root {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+
+:root {
+  --dominant: #195134;
+  --secondary: #50A067;
+  --highlight: #EFE100;
+  --white: #FFFFFF;
+  --black: #000000;
+  --container-max: 1920px;
+}
+
+/* === Container === */
+.container-1080 {
+  max-width: var(--container-max);
+  margin: 30 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.home {
+  max-width: var(--container-max);
+  margin: 30 auto;
+}
+
+/* === Fonts === */
+.font-gotham-black { font-family: "GothamBlack", "Montserrat", system-ui, sans-serif; }
+.font-gotham-regular { font-family: "GothamRegular", "Montserrat", system-ui, sans-serif; }
+
+/* === Body === */
+body {
+  margin: 10 !important; 
+  padding: 0 !important;
+  background: var(--white);
+  color: var(--black);
+  font-family: "GothamRegular", "Montserrat", system-ui, sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* === Headings === */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "GothamBlack", "Montserrat", system-ui, sans-serif;
+}
+
+/* === Sections === */
+.section {
+  width: 100%;
+  padding: 56px 0;
+}
+
+.section-green { background-color: var(--dominant); color: var(--white); }
+.section-white { background-color: var(--white); color: var(--black); }
+
+.section-green * { color: var(--white) !important; }
+
+/* === Cards === */
+.card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.mod-card {
+  background: white;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.mod-card:hover {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+/* === Typography === */
+.section-title {
+  font-family: "GothamBlack", "Montserrat", sans-serif;
+  font-size: 3rem;
+  line-height: 1.2;
+}
+
+.section-subtitle {
+  font-family: "GothamBlack", "Montserrat", sans-serif;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.section-substitle {
+  font-size: 1.5rem;
+  font-family: "GothamBlack";
+}
+
+.section-subs {
+  font-size: 1.2rem;
+  font-family: "GothamBlack";
+}
+
+.section-sub {
+  font-size: 1rem;
+  font-family: "GothamBlack";
+  font-weight: 80;
+}
+
+@media (max-width: 768px) {
+  .section-title { font-size: 2rem; }
+}
+
+/* === Underline === */
+.underline-accent {
+  width: 80px;
+  height: 6px;
+  border-radius: 5px;
+  background: var(--highlight);
+  margin-top: 8px;
+}
+
+/* === Section Wrapper === */
+.section-wrapper {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+/* FIX: Ensure no extra spacing at top */
+section {
+  scroll-margin-top: 0 !important;
+}
+
+/* === Buttons === */
+.btn-pill {
+  padding: 12px 26px;
+  border-radius: 9999px;
+  font-family: "GothamBlack";
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* === Scrollbars === */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dominant);
+}
+
+/* === Links === */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  color: var(--dominant);
+}
+
+
+*:focus-visible {
+  outline: 2px solid var(--highlight);
+}
+
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+.preventives-container {
+  margin-top: 0 !important;  
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+}
