@@ -55,17 +55,7 @@ function SocialBtn({ href, Icon }) {
   return (
     <a href={href} target="_blank" rel="noopener noreferrer"
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-      style={{
-        width: 38, height: 38, borderRadius: "50%", flexShrink: 0,
-        display: "flex", alignItems: "center", justifyContent: "center",
-        background: hov ? C.lime : "rgba(255,255,255,0.06)",
-        border: `1px solid ${hov ? C.lime : C.border}`,
-        color: hov ? C.deep : C.onDarkMid,
-        textDecoration: "none",
-        transition: "all 0.2s ease",
-        transform: hov ? "translateY(-2px)" : "none",
-        boxShadow: hov ? "0 8px 20px rgba(200,236,56,0.2)" : "none",
-      }}
+      style={{ width: 38, height: 38, borderRadius: "50%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", background: hov ? C.lime : "rgba(255,255,255,0.06)", border: `1px solid ${hov ? C.lime : C.border}`, color: hov ? C.deep : C.onDarkMid, textDecoration: "none", transition: "all 0.2s ease", transform: hov ? "translateY(-2px)" : "none", boxShadow: hov ? "0 8px 20px rgba(200,236,56,0.2)" : "none" }}
     >
       <Icon />
     </a>
@@ -77,13 +67,7 @@ function FooterLink({ href = "#", children }) {
   return (
     <a href={href}
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-      style={{
-        display: "flex", alignItems: "center", gap: 7,
-        fontFamily: C.font, fontSize: "0.82rem",
-        color: hov ? C.cream : C.onDarkMid,
-        textDecoration: "none", marginBottom: 11,
-        transition: "color 0.18s ease",
-      }}
+      style={{ display: "flex", alignItems: "center", gap: 7, fontFamily: C.font, fontSize: "0.82rem", color: hov ? C.cream : C.onDarkMid, textDecoration: "none", marginBottom: 11, transition: "color 0.18s ease" }}
     >
       {hov && <span style={{ width: 14, height: 1.5, background: C.lime, borderRadius: 2, flexShrink: 0 }} />}
       {children}
@@ -106,31 +90,71 @@ export default function Footer() {
   return (
     <footer style={{ background: C.deep, borderTop: `1px solid ${C.border}` }}>
 
+      <style>{`
+        /* ── Footer grid ── */
+        .footer-grid {
+          display: grid;
+          grid-template-columns: 2.2fr 1fr 1fr 1.3fr;
+          gap: clamp(24px, 4vw, 68px);
+        }
+
+        /* ── Tablet (≤900px): 2×2 ── */
+        @media (max-width: 900px) {
+          .footer-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 36px 40px;
+          }
+          /* Brand col spans full width */
+          .footer-brand { grid-column: 1 / -1; }
+        }
+
+        /* ── Mobile (≤600px): single column ── */
+        @media (max-width: 600px) {
+          .footer-grid {
+            grid-template-columns: 1fr;
+            gap: 32px;
+          }
+          .footer-brand { grid-column: 1; }
+
+          /* Collapse nav + services into a 2-col mini grid */
+          .footer-links-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 24px;
+          }
+
+          /* Bottom bar */
+          .footer-bar-inner {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 8px !important;
+          }
+        }
+
+        /* ── Very small (≤380px) ── */
+        @media (max-width: 380px) {
+          .footer-links-row { grid-template-columns: 1fr; }
+          .footer-hotline-num { font-size: 1rem !important; }
+        }
+      `}</style>
+
       {/* ── MAIN GRID ── */}
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "68px clamp(20px,3vw,56px) 52px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "2.2fr 1fr 1fr 1.3fr", gap: "clamp(28px,4vw,68px)" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "68px clamp(18px,3vw,56px) 52px" }}>
+        <div className="footer-grid">
 
           {/* COL 1 — Brand */}
-          <div>
+          <div className="footer-brand">
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 22 }}>
-              <div style={{
-                width: 44, height: 44, borderRadius: "50%", overflow: "hidden", flexShrink: 0,
-                border: "1.5px solid rgba(200,236,56,0.28)",
-                boxShadow: "0 0 0 3px rgba(200,236,56,0.06)",
-              }}>
+              <div style={{ width: 44, height: 44, borderRadius: "50%", overflow: "hidden", flexShrink: 0, border: "1.5px solid rgba(200,236,56,0.28)", boxShadow: "0 0 0 3px rgba(200,236,56,0.06)" }}>
                 <img src={CityLogo} alt="HSO Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
               <div>
-                <p style={{ fontFamily: C.font, fontSize: "0.88rem", fontWeight: 800, color: C.white, letterSpacing: "-0.01em", margin: "0 0 2px", lineHeight: 1.2 }}>
-                  Health Services Office
-                </p>
-                <p style={{ fontFamily: C.font, fontSize: "0.62rem", fontWeight: 500, color: "rgba(200,236,56,0.5)", margin: 0, letterSpacing: "0.07em" }}>
-                  City Government of Baguio
-                </p>
+                <p style={{ fontFamily: C.font, fontSize: "0.88rem", fontWeight: 800, color: C.white, letterSpacing: "-0.01em", margin: "0 0 2px", lineHeight: 1.2 }}>Health Services Office</p>
+                <p style={{ fontFamily: C.font, fontSize: "0.62rem", fontWeight: 500, color: "rgba(200,236,56,0.5)", margin: 0, letterSpacing: "0.07em" }}>City Government of Baguio</p>
               </div>
             </div>
 
-            <p style={{ fontFamily: C.font, fontSize: "0.82rem", color: C.cream, lineHeight: 1.72, margin: "0 0 28px", maxWidth: 290 }}>
+            <p style={{ fontFamily: C.font, fontSize: "0.82rem", color: C.cream, lineHeight: 1.72, margin: "0 0 28px", maxWidth: 340 }}>
               Empowering community health awareness and breaking barriers towards universal care in Baguio City.
             </p>
 
@@ -141,23 +165,26 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* COL 2 — Navigation */}
-          <div>
-            <ColLabel>Navigation</ColLabel>
-            <FooterLink href="#">Home</FooterLink>
-            <FooterLink href="#">About Us</FooterLink>
-            <FooterLink href="#pretest">Pre-Test</FooterLink>
-            <FooterLink href="#">Find a Center</FooterLink>
-          </div>
+          {/* COLs 2 & 3 — Nav + Services (wrapped in a mini-row on mobile) */}
+          <div className="footer-links-row" style={{ display: "contents" }}>
+            {/* COL 2 — Navigation */}
+            <div>
+              <ColLabel>Navigation</ColLabel>
+              <FooterLink href="#">Home</FooterLink>
+              <FooterLink href="#">About Us</FooterLink>
+              <FooterLink href="#pretest">Pre-Test</FooterLink>
+              <FooterLink href="#">Find a Center</FooterLink>
+            </div>
 
-          {/* COL 3 — Services */}
-          <div>
-            <ColLabel>Services</ColLabel>
-            <FooterLink>HIV Testing</FooterLink>
-            <FooterLink>STI Screening</FooterLink>
-            <FooterLink>Maternal Care</FooterLink>
-            <FooterLink>Mental Health</FooterLink>
-            <FooterLink>TB DOTS</FooterLink>
+            {/* COL 3 — Services */}
+            <div>
+              <ColLabel>Services</ColLabel>
+              <FooterLink>HIV Testing</FooterLink>
+              <FooterLink>STI Screening</FooterLink>
+              <FooterLink>Maternal Care</FooterLink>
+              <FooterLink>Mental Health</FooterLink>
+              <FooterLink>TB DOTS</FooterLink>
+            </div>
           </div>
 
           {/* COL 4 — Contact */}
@@ -165,46 +192,35 @@ export default function Footer() {
             <ColLabel>Contact</ColLabel>
 
             {/* Hotline card */}
-            <div style={{
-              background: "rgba(200,236,56,0.07)",
-              border: "1px solid rgba(200,236,56,0.14)",
-              borderRadius: 18, padding: "16px 18px", marginBottom: 18,
-            }}>
+            <div style={{ background: "rgba(200,236,56,0.07)", border: "1px solid rgba(200,236,56,0.14)", borderRadius: 18, padding: "16px 18px", marginBottom: 18 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 10 }}>
                 <IcoPhone />
-                <span style={{ fontFamily: C.font, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(200,236,56,0.5)" }}>
-                  Hotline
-                </span>
+                <span style={{ fontFamily: C.font, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(200,236,56,0.5)" }}>Hotline</span>
               </div>
-              <p style={{ fontFamily: C.font, fontSize: "1.15rem", fontWeight: 900, color: C.lime, letterSpacing: "-0.03em", margin: "0 0 3px", lineHeight: 1 }}>
+              <p className="footer-hotline-num" style={{ fontFamily: C.font, fontSize: "1.15rem", fontWeight: 900, color: C.lime, letterSpacing: "-0.03em", margin: "0 0 3px", lineHeight: 1 }}>
                 0985-251-5968
               </p>
-              <p style={{ fontFamily: C.font, fontSize: "0.82rem", fontWeight: 600, color: C.cream, margin: 0 }}>
-                442-9800
-              </p>
+              <p style={{ fontFamily: C.font, fontSize: "0.82rem", fontWeight: 600, color: C.cream, margin: 0 }}>442-9800</p>
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <IcoMail />
-                <a href="mailto:info@govph.org" style={{ fontFamily: C.font, fontSize: "0.78rem", color: C.cream, textDecoration: "none" }}>
-                  info@govph.org
-                </a>
+                <a href="mailto:info@govph.org" style={{ fontFamily: C.font, fontSize: "0.78rem", color: C.cream, textDecoration: "none" }}>info@govph.org</a>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <IcoPin />
-                <span style={{ fontFamily: C.font, fontSize: "0.78rem", color: C.cream }}>
-                  Baguio City, Philippines
-                </span>
+                <span style={{ fontFamily: C.font, fontSize: "0.78rem", color: C.cream }}>Baguio City, Philippines</span>
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
       {/* ── BOTTOM BAR ── */}
-      <div style={{ borderTop: `1px solid ${C.border}`, padding: "20px clamp(20px,3vw,56px)" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
+      <div style={{ borderTop: `1px solid ${C.border}`, padding: "20px clamp(18px,3vw,56px)" }}>
+        <div className="footer-bar-inner" style={{ maxWidth: 1280, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
           <p style={{ fontFamily: C.font, fontSize: "0.72rem", color: C.cream, margin: 0 }}>
             &copy; {new Date().getFullYear()} Baguio City Health Services Office. All rights reserved.
           </p>

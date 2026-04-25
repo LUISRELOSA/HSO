@@ -68,11 +68,6 @@ const IcoClose = () => (
     <path d="M2 2l7 7M9 2L2 9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
   </svg>
 );
-const IcoArrowR = () => (
-  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-    <path d="M1.5 6h9M7 2.5l3.5 3.5L7 9.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
 const IcoChevL = () => (
   <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
     <path d="M8.5 10.5L4.5 6.5l4-4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/>
@@ -112,23 +107,15 @@ const IcoMapPin = () => (
   </svg>
 );
 
-const travelIcons = { walk: IcoWalk, moto: IcoMoto, car: IcoCar };
+const travelIcons  = { walk: IcoWalk, moto: IcoMoto, car: IcoCar };
 const travelLabels = { walk: "Walking", moto: "Motorcycle", car: "By Car" };
 
 /* ── Stat chip ── */
 function StatChip({ value, label }) {
   return (
-    <div style={{
-      background: C.cream, border: `1.5px solid ${C.creamDark}`,
-      borderRadius: 18, padding: "22px 22px",
-      boxShadow: "0 2px 8px rgba(13,51,32,0.05)",
-    }}>
-      <p style={{ fontFamily: C.font, fontSize: "2.2rem", fontWeight: 900, letterSpacing: "-0.055em", color: C.forest, lineHeight: 1, margin: "0 0 5px" }}>
-        {value}
-      </p>
-      <span style={{ fontFamily: C.font, fontSize: "0.78rem", fontWeight: 600, color: C.inkMid, letterSpacing: "0.02em" }}>
-        {label}
-      </span>
+    <div style={{ background: C.cream, border: `1.5px solid ${C.creamDark}`, borderRadius: 18, padding: "22px 22px", boxShadow: "0 2px 8px rgba(13,51,32,0.05)" }}>
+      <p style={{ fontFamily: C.font, fontSize: "2.2rem", fontWeight: 900, letterSpacing: "-0.055em", color: C.forest, lineHeight: 1, margin: "0 0 5px" }}>{value}</p>
+      <span style={{ fontFamily: C.font, fontSize: "0.78rem", fontWeight: 600, color: C.inkMid, letterSpacing: "0.02em" }}>{label}</span>
     </div>
   );
 }
@@ -152,113 +139,170 @@ export default function Contact() {
   return (
     <div style={{ fontFamily: C.font }}>
 
-      {/* ── HERO  (deep green) ── */}
-      <div style={{ background: C.deep, paddingTop: 80, paddingBottom: 80 }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 clamp(20px,3vw,56px)" }}>
+      <style>{`
+        /* ── Stats ── */
+        .contact-stats {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 14px;
+          margin-bottom: 36px;
+        }
 
+        /* ── Map bento ── */
+        .contact-map-bento {
+          display: grid;
+          grid-template-columns: 300px 1fr;
+          gap: 16px;
+          margin-bottom: 16px;
+        }
+        .contact-sidebar {
+          background: ${C.white};
+          border: 1.5px solid ${C.creamDark};
+          border-radius: 24px;
+          overflow: hidden;
+          max-height: 528px;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 2px 10px rgba(13,51,32,0.06);
+        }
+        .contact-map-height { height: 420px; }
+
+        /* ── Hotline + Hours ── */
+        .contact-info-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+        }
+
+        /* ── Hero title ── */
+        .contact-hero-title {
+          font-size: clamp(2.4rem, 8vw, 4rem);
+        }
+
+        /* ── Tablet (≤900px) ── */
+        @media (max-width: 900px) {
+          .contact-stats {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .contact-map-bento {
+            grid-template-columns: 1fr;
+          }
+          /* On tablet, sidebar sits BELOW the map; swap order */
+          .contact-sidebar {
+            max-height: none;
+            order: 2;
+          }
+          .contact-map-col { order: 1; }
+          .contact-map-height { height: 380px; }
+        }
+
+        /* ── Mobile (≤640px) ── */
+        @media (max-width: 640px) {
+          .contact-stats {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+          }
+          .contact-stat-value { font-size: 1.5rem !important; }
+          .contact-info-grid  { grid-template-columns: 1fr; }
+          .contact-map-height { height: 300px; }
+          .contact-sidebar    { max-height: none; }
+
+          /* Hotline card: tighten */
+          .contact-hotline-card  { padding: 22px 22px !important; }
+          .contact-hotline-num   { font-size: clamp(1.3rem, 5vw, 2.2rem) !important; }
+          .contact-hours-card    { padding: 22px 22px !important; }
+          .contact-hours-title   { font-size: clamp(1.1rem, 4vw, 1.8rem) !important; }
+
+          /* Hero */
+          .contact-hero { padding-top: 52px !important; padding-bottom: 52px !important; }
+          .contact-hero-body { padding-top: 44px !important; padding-bottom: 48px !important; }
+        }
+
+        /* ── Small mobile (≤400px) ── */
+        @media (max-width: 400px) {
+          .contact-stats { grid-template-columns: 1fr 1fr; gap: 8px; }
+        }
+      `}</style>
+
+      {/* ── HERO ── */}
+      <div className="contact-hero" style={{ background: C.deep, paddingTop: 80, paddingBottom: 80 }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 clamp(18px,3vw,56px)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 28 }}>
             <div style={{ width: 18, height: 2, background: C.lime, borderRadius: 2 }} />
             <span style={{ fontFamily: C.font, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#C8EC38" }}>
               Baguio City Health Services Office
             </span>
           </div>
-
-          <h1 style={{
-            fontFamily: C.font, fontSize: "clamp(4rem,8vw,4rem)",
-            fontWeight: 900, color: C.cream, letterSpacing: "-0.065em",
-            lineHeight: 0.88, margin: "0 0 28px",
-          }}>
+          <h1 className="contact-hero-title" style={{ fontFamily: C.font, fontWeight: 900, color: C.cream, letterSpacing: "-0.065em", lineHeight: 0.88, margin: "0 0 28px" }}>
             Find a Health Center
           </h1>
-
-          <p style={{ fontFamily: C.font, fontSize: "clamp(0.95rem,1.3vw,1.1rem)", color: "#f5f4ee", lineHeight: 1.78, maxWidth: 520, margin: 0 }}>
+          <p style={{ fontFamily: C.font, fontSize: "clamp(0.88rem,1.3vw,1.1rem)", color: "#f5f4ee", lineHeight: 1.78, maxWidth: 520, margin: 0 }}>
             17 district health centers across Baguio City, open Monday to Friday. All services are free.
           </p>
         </div>
       </div>
 
-      {/* ── STATS + MAP ── (cream) ── */}
-      <div style={{ background: C.creamDark, paddingTop: 72, paddingBottom: 80 }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 clamp(20px,3vw,56px)" }}>
+      {/* ── STATS + MAP ── */}
+      <div className="contact-hero-body" style={{ background: C.creamDark, paddingTop: 72, paddingBottom: 80 }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 clamp(18px,3vw,56px)" }}>
 
           {/* Stat row */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14, marginBottom: 36 }}>
-            <StatChip value="17" label="Health Centers" />
-            <StatChip value="Mon–Fri" label="Open Days" />
-            <StatChip value="8am–5pm" label="Office Hours" />
-            <StatChip value="Free" label="All Consultations" />
+          <div className="contact-stats">
+            {[
+              { value: "17",       label: "Health Centers"    },
+              { value: "Mon–Fri",  label: "Open Days"         },
+              { value: "8am–5pm",  label: "Office Hours"      },
+              { value: "Free",     label: "All Consultations" },
+            ].map(s => (
+              <div key={s.label} style={{ background: C.cream, border: `1.5px solid ${C.creamDark}`, borderRadius: 18, padding: "22px 22px", boxShadow: "0 2px 8px rgba(13,51,32,0.05)" }}>
+                <p className="contact-stat-value" style={{ fontFamily: C.font, fontSize: "2.2rem", fontWeight: 900, letterSpacing: "-0.055em", color: C.forest, lineHeight: 1, margin: "0 0 5px" }}>{s.value}</p>
+                <span style={{ fontFamily: C.font, fontSize: "0.78rem", fontWeight: 600, color: C.inkMid, letterSpacing: "0.02em" }}>{s.label}</span>
+              </div>
+            ))}
           </div>
 
           {/* Map bento */}
-          <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", gap: 16, marginBottom: 16 }}>
+          <div className="contact-map-bento">
 
             {/* SIDEBAR */}
-            <div style={{
-              background: C.white, border: `1.5px solid ${C.creamDark}`,
-              borderRadius: 24, overflow: "hidden",
-              maxHeight: 528, display: "flex", flexDirection: "column",
-              boxShadow: "0 2px 10px rgba(13,51,32,0.06)",
-            }}>
+            <div className="contact-sidebar">
               {active ? (
                 <>
-                  {/* Image */}
                   <div style={{ position: "relative", height: 158, overflow: "hidden", flexShrink: 0 }}>
                     <img src={active.image} alt={active.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                     <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(13,51,32,0.88) 0%, transparent 55%)" }} />
                     <button
                       onClick={() => setActive(null)}
-                      style={{
-                        position: "absolute", top: 12, left: 12,
-                        background: "rgba(245,244,238,0.92)", backdropFilter: "blur(6px)",
-                        border: "none", borderRadius: 100, padding: "5px 11px",
-                        display: "flex", alignItems: "center", gap: 5,
-                        cursor: "pointer", color: C.forest, transition: "all 0.18s",
-                        fontFamily: C.font, fontSize: "0.66rem", fontWeight: 700, letterSpacing: "0.05em",
-                      }}
+                      style={{ position: "absolute", top: 12, left: 12, background: "rgba(245,244,238,0.92)", backdropFilter: "blur(6px)", border: "none", borderRadius: 100, padding: "5px 11px", display: "flex", alignItems: "center", gap: 5, cursor: "pointer", color: C.forest, transition: "all 0.18s", fontFamily: C.font, fontSize: "0.66rem", fontWeight: 700, letterSpacing: "0.05em" }}
                       onMouseEnter={e => e.currentTarget.style.background = C.lime}
                       onMouseLeave={e => e.currentTarget.style.background = "rgba(245,244,238,0.92)"}
                     >
                       <IcoChevL /> Back
                     </button>
-                    <p style={{
-                      position: "absolute", bottom: 13, left: 14, right: 14,
-                      fontFamily: C.font, fontSize: "0.9rem", fontWeight: 800,
-                      color: C.white, margin: 0, lineHeight: 1.25, letterSpacing: "-0.015em",
-                    }}>
+                    <p style={{ position: "absolute", bottom: 13, left: 14, right: 14, fontFamily: C.font, fontSize: "0.9rem", fontWeight: 800, color: C.white, margin: 0, lineHeight: 1.25, letterSpacing: "-0.015em" }}>
                       {active.name}
                     </p>
                   </div>
 
-                  {/* Details */}
                   <div style={{ overflowY: "auto", padding: "16px 18px", flex: 1, display: "flex", flexDirection: "column", gap: 14, scrollbarWidth: "none" }}>
-                    <p style={{ fontFamily: C.font, fontSize: "0.8rem", color: C.inkMid, lineHeight: 1.6, margin: 0 }}>
-                      {active.description}
-                    </p>
+                    <p style={{ fontFamily: C.font, fontSize: "0.8rem", color: C.inkMid, lineHeight: 1.6, margin: 0 }}>{active.description}</p>
 
-                    {/* Phone */}
                     <div style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(23,83,48,0.07)", borderRadius: 12, padding: "10px 14px" }}>
                       <IcoPhone />
-                      <span style={{ fontFamily: C.font, fontSize: "0.82rem", fontWeight: 700, color: C.forest }}>
-                        {active.phone}
-                      </span>
+                      <span style={{ fontFamily: C.font, fontSize: "0.82rem", fontWeight: 700, color: C.forest }}>{active.phone}</span>
                     </div>
 
-                    {/* Travel times */}
                     <div>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 9 }}>
                         <div style={{ width: 14, height: 1.5, background: C.inkFaint, borderRadius: 2 }} />
-                        <span style={{ fontFamily: C.font, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: C.inkFaint }}>
-                          Travel Time
-                        </span>
+                        <span style={{ fontFamily: C.font, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: C.inkFaint }}>Travel Time</span>
                       </div>
                       <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
                         {Object.entries(active.travel).map(([k, v]) => {
                           const Icon = travelIcons[k];
                           return (
-                            <div key={k} style={{
-                              display: "flex", justifyContent: "space-between", alignItems: "center",
-                              padding: "8px 13px", background: C.creamDark, borderRadius: 10,
-                            }}>
+                            <div key={k} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 13px", background: C.creamDark, borderRadius: 10 }}>
                               <div style={{ display: "flex", alignItems: "center", gap: 7, color: C.inkMid }}>
                                 <Icon />
                                 <span style={{ fontFamily: C.font, fontSize: "0.74rem", color: C.inkMid }}>{travelLabels[k]}</span>
@@ -270,50 +314,30 @@ export default function Contact() {
                       </div>
                     </div>
 
-                    {/* Details text */}
                     <div style={{ background: "rgba(23,83,48,0.06)", border: "1px solid rgba(23,83,48,0.1)", borderRadius: 12, padding: "12px 14px" }}>
-                      <p style={{ fontFamily: C.font, fontSize: "0.74rem", color: C.forest, lineHeight: 1.68, margin: 0, whiteSpace: "pre-line" }}>
-                        {active.details}
-                      </p>
+                      <p style={{ fontFamily: C.font, fontSize: "0.74rem", color: C.forest, lineHeight: 1.68, margin: 0, whiteSpace: "pre-line" }}>{active.details}</p>
                     </div>
                   </div>
                 </>
               ) : (
                 <div style={{ padding: "44px 28px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%", textAlign: "center", gap: 16 }}>
-                  <div style={{
-                    width: 52, height: 52,
-                    background: "rgba(23,83,48,0.08)", border: "1.5px solid rgba(23,83,48,0.12)",
-                    borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
-                  }}>
+                  <div style={{ width: 52, height: 52, background: "rgba(23,83,48,0.08)", border: "1.5px solid rgba(23,83,48,0.12)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <IcoMapPin />
                   </div>
                   <div>
-                    <p style={{ fontFamily: C.font, fontSize: "0.95rem", fontWeight: 800, color: C.ink, margin: "0 0 6px", letterSpacing: "-0.015em" }}>
-                      Select a health center
-                    </p>
-                    <p style={{ fontFamily: C.font, fontSize: "0.78rem", color: C.inkMid, margin: 0, lineHeight: 1.6 }}>
-                      Click any pin on the map to view details, services, and travel times.
-                    </p>
+                    <p style={{ fontFamily: C.font, fontSize: "0.95rem", fontWeight: 800, color: C.ink, margin: "0 0 6px", letterSpacing: "-0.015em" }}>Select a health center</p>
+                    <p style={{ fontFamily: C.font, fontSize: "0.78rem", color: C.inkMid, margin: 0, lineHeight: 1.6 }}>Click any pin on the map to view details, services, and travel times.</p>
                   </div>
                 </div>
               )}
             </div>
 
             {/* MAP */}
-            <div style={{
-              background: C.white, border: `1.5px solid ${C.creamDark}`,
-              borderRadius: 24, overflow: "hidden",
-              boxShadow: "0 2px 10px rgba(13,51,32,0.06)",
-            }}>
+            <div className="contact-map-col" style={{ background: C.white, border: `1.5px solid ${C.creamDark}`, borderRadius: 24, overflow: "hidden", boxShadow: "0 2px 10px rgba(13,51,32,0.06)" }}>
               {/* Search */}
               <div style={{ padding: "13px 16px", background: C.cream, borderBottom: `1px solid ${C.creamDark}` }}>
                 <div style={{ position: "relative" }}>
-                  <div style={{
-                    display: "flex", alignItems: "center", gap: 10,
-                    background: C.white, border: `1.5px solid ${C.creamDark}`,
-                    borderRadius: 100, padding: "9px 16px",
-                    transition: "border-color 0.18s",
-                  }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, background: C.white, border: `1.5px solid ${C.creamDark}`, borderRadius: 100, padding: "9px 16px", transition: "border-color 0.18s" }}>
                     <span style={{ color: C.inkMid }}><IcoSearch /></span>
                     <input
                       type="text"
@@ -327,21 +351,13 @@ export default function Contact() {
                       }}
                       onFocus={e => e.target.parentElement.style.borderColor = C.forest}
                       onBlur={e => e.target.parentElement.style.borderColor = C.creamDark}
-                      onKeyDown={e => { if (e.key === "Enter") { setSubmit(query); setSuggest([]); }}}
-                      style={{
-                        flex: 1, border: "none", background: "transparent", outline: "none",
-                        fontFamily: C.font, fontSize: "0.84rem", color: C.ink,
-                      }}
+                      onKeyDown={e => { if (e.key === "Enter") { setSubmit(query); setSuggest([]); } }}
+                      style={{ flex: 1, border: "none", background: "transparent", outline: "none", fontFamily: C.font, fontSize: "0.84rem", color: C.ink }}
                     />
                     {query && (
                       <button
                         onClick={() => { setQuery(""); setSubmit(""); setSuggest([]); setFiltered(locations); }}
-                        style={{
-                          width: 22, height: 22, borderRadius: "50%", flexShrink: 0,
-                          border: "none", background: C.creamDark, cursor: "pointer",
-                          display: "flex", alignItems: "center", justifyContent: "center",
-                          color: C.inkMid,
-                        }}
+                        style={{ width: 22, height: 22, borderRadius: "50%", flexShrink: 0, border: "none", background: C.creamDark, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: C.inkMid }}
                       >
                         <IcoClose />
                       </button>
@@ -349,21 +365,11 @@ export default function Contact() {
                   </div>
 
                   {suggest.length > 0 && (
-                    <div style={{
-                      position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0,
-                      background: C.white, border: `1.5px solid ${C.creamDark}`,
-                      borderRadius: 18, overflow: "hidden", zIndex: 50,
-                      boxShadow: "0 12px 40px rgba(13,51,32,0.1)",
-                    }}>
+                    <div style={{ position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, background: C.white, border: `1.5px solid ${C.creamDark}`, borderRadius: 18, overflow: "hidden", zIndex: 50, boxShadow: "0 12px 40px rgba(13,51,32,0.1)" }}>
                       {suggest.map((s, i) => (
                         <div key={i}
                           onClick={() => { setQuery(s.name); setSubmit(s.name); setSuggest([]); }}
-                          style={{
-                            padding: "11px 18px", fontFamily: C.font, fontSize: "0.82rem",
-                            color: C.ink, cursor: "pointer",
-                            borderBottom: i < suggest.length - 1 ? `1px solid ${C.creamDark}` : "none",
-                            transition: "background 0.15s",
-                          }}
+                          style={{ padding: "11px 18px", fontFamily: C.font, fontSize: "0.82rem", color: C.ink, cursor: "pointer", borderBottom: i < suggest.length - 1 ? `1px solid ${C.creamDark}` : "none", transition: "background 0.15s" }}
                           onMouseEnter={e => e.currentTarget.style.background = C.creamDark}
                           onMouseLeave={e => e.currentTarget.style.background = "transparent"}
                         >
@@ -376,7 +382,8 @@ export default function Contact() {
               </div>
 
               <GoogleMap
-                mapContainerStyle={{ width: "100%", height: 420 }}
+                mapContainerClassName="contact-map-height"
+                mapContainerStyle={{ width: "100%" }}
                 center={defaultCenter} zoom={13}
                 onLoad={m => (mapRef.current = m)}
                 options={{
@@ -395,81 +402,50 @@ export default function Contact() {
                 ))}
               </GoogleMap>
 
-              <div style={{
-                padding: "10px 18px", background: C.cream, borderTop: `1px solid ${C.creamDark}`,
-                display: "flex", justifyContent: "space-between", alignItems: "center",
-              }}>
-                <span style={{ fontFamily: C.font, fontSize: "0.74rem", color: C.inkMid }}>
-                  Showing {filtered.length} of {locations.length} centers
-                </span>
-                <span style={{ fontFamily: C.font, fontSize: "0.74rem", color: C.inkFaint }}>
-                  Baguio City, Benguet
-                </span>
+              <div style={{ padding: "10px 18px", background: C.cream, borderTop: `1px solid ${C.creamDark}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontFamily: C.font, fontSize: "0.74rem", color: C.inkMid }}>Showing {filtered.length} of {locations.length} centers</span>
+                <span style={{ fontFamily: C.font, fontSize: "0.74rem", color: C.inkFaint }}>Baguio City, Benguet</span>
               </div>
             </div>
           </div>
 
           {/* ── HOTLINE + HOURS ── */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+          <div className="contact-info-grid">
 
-            {/* Hotline — lime bg */}
-            <div style={{
-              background: C.lime, borderRadius: 24, padding: "32px 36px",
-              display: "flex", alignItems: "center", justifyContent: "space-between",
-            }}>
+            {/* Hotline — lime */}
+            <div className="contact-hotline-card" style={{ background: C.lime, borderRadius: 24, padding: "32px 36px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
                   <div style={{ width: 16, height: 2, background: C.deep, borderRadius: 2 }} />
-                  <span style={{ fontFamily: C.font, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(13,51,32,0.55)" }}>
-                    Emergency Hotline
-                  </span>
+                  <span style={{ fontFamily: C.font, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(13,51,32,0.55)" }}>Emergency Hotline</span>
                 </div>
-                <p style={{ fontFamily: C.font, fontSize: "clamp(1.6rem,2.5vw,2.2rem)", fontWeight: 900, letterSpacing: "-0.04em", color: C.deep, margin: "0 0 4px", lineHeight: 1 }}>
-                  0985-251-5968
-                </p>
-                <p style={{ fontFamily: C.font, fontSize: "1rem", fontWeight: 700, color: C.forest, margin: 0 }}>
-                  442-9800
-                </p>
+                <p className="contact-hotline-num" style={{ fontFamily: C.font, fontSize: "clamp(1.6rem,2.5vw,2.2rem)", fontWeight: 900, letterSpacing: "-0.04em", color: C.deep, margin: "0 0 4px", lineHeight: 1 }}>0985-251-5968</p>
+                <p style={{ fontFamily: C.font, fontSize: "1rem", fontWeight: 700, color: C.forest, margin: 0 }}>442-9800</p>
               </div>
-              <div style={{
-                width: 56, height: 56, borderRadius: 16, flexShrink: 0,
-                background: "rgba(13,51,32,0.1)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-              }}>
+              <div style={{ width: 56, height: 56, borderRadius: 16, flexShrink: 0, background: "rgba(13,51,32,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
                   <path d="M4 4.5C4 3.7 4.7 3 5.5 3h2.8c.6 0 1.1.45 1.2 1.05l.9 4.5c.1.55-.15 1.1-.65 1.38L8.5 10.9c1.2 2.4 3.15 4.35 5.55 5.55l1.47-1.25c.28-.5.83-.75 1.38-.65l4.5.9c.6.1 1.05.6 1.05 1.2V19.5c0 .83-.67 1.5-1.5 1.5C8.5 21 3 15.5 3 8.5c0-.83.67-1.5 1.5-1.5" fill={C.deep}/>
                 </svg>
               </div>
             </div>
 
-            {/* Hours — deep green */}
-            <div style={{
-              background: C.deep, border: "1px solid rgba(255,255,255,0.06)",
-              borderRadius: 24, padding: "32px 36px",
-              display: "flex", flexDirection: "column", justifyContent: "space-between",
-            }}>
+            {/* Hours — deep */}
+            <div className="contact-hours-card" style={{ background: C.deep, border: "1px solid rgba(255,255,255,0.06)", borderRadius: 24, padding: "32px 36px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
                   <div style={{ width: 16, height: 2, background: C.lime, borderRadius: 2 }} />
-                  <span style={{ fontFamily: C.font, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(200,236,56,0.5)" }}>
-                    Office Hours
-                  </span>
+                  <span style={{ fontFamily: C.font, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(200,236,56,0.5)" }}>Office Hours</span>
                 </div>
-                <p style={{ fontFamily: C.font, fontSize: "clamp(1.4rem,2vw,1.8rem)", fontWeight: 900, color: C.cream, letterSpacing: "-0.035em", margin: "0 0 4px", lineHeight: 1 }}>
-                  Monday – Friday
-                </p>
-                <p style={{ fontFamily: C.font, fontSize: "clamp(1.4rem,2vw,1.8rem)", fontWeight: 900, color: C.lime, letterSpacing: "-0.035em", margin: 0, lineHeight: 1 }}>
-                  8:00 AM – 5:00 PM
-                </p>
+                <p className="contact-hours-title" style={{ fontFamily: C.font, fontSize: "clamp(1.4rem,2vw,1.8rem)", fontWeight: 900, color: C.cream, letterSpacing: "-0.035em", margin: "0 0 4px", lineHeight: 1 }}>Monday – Friday</p>
+                <p className="contact-hours-title" style={{ fontFamily: C.font, fontSize: "clamp(1.4rem,2vw,1.8rem)", fontWeight: 900, color: C.lime, letterSpacing: "-0.035em", margin: 0, lineHeight: 1 }}>8:00 AM – 5:00 PM</p>
               </div>
-              <p style={{ fontFamily: C.font, fontSize: "0.8rem", color: C.cream, marginTop: 16 }}>
-                Closed on holidays. All services are free of charge.
-              </p>
+              <p style={{ fontFamily: C.font, fontSize: "0.8rem", color: C.cream, marginTop: 16 }}>Closed on holidays. All services are free of charge.</p>
             </div>
           </div>
 
         </div>
       </div>
+
       <FloatingChatBot />
     </div>
   );

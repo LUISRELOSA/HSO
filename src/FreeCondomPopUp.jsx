@@ -52,16 +52,61 @@ export default function FreeCondomPopup() {
         WebkitBackdropFilter: "blur(20px) brightness(0.5)",
         opacity: visible ? 1 : 0,
         transition: "opacity 0.36s ease",
-        padding: 24,
+        padding: "16px",
       }}
     >
+      <style>{`
+        /* ── Popup responsive ── */
+        .popup-card {
+          width: 560px;
+          max-width: 100%;
+          border-radius: 32px;
+        }
+        .popup-img-panel {
+          width: 100%;
+          height: 300px;
+        }
+        .popup-content {
+          padding: 28px 32px 32px;
+        }
+        .popup-title {
+          font-size: 2.2rem;
+        }
+        .popup-stats {
+          display: flex;
+          gap: 0;
+          margin-bottom: 28px;
+        }
+        .popup-btns {
+          display: flex;
+          gap: 10px;
+        }
+
+        /* ── Mobile (≤520px) ── */
+        @media (max-width: 520px) {
+          .popup-card     { border-radius: 22px; }
+          .popup-img-panel { height: 200px; }
+          .popup-content  { padding: 20px 20px 24px; }
+          .popup-title    { font-size: 1.7rem !important; }
+        }
+
+        /* ── Small mobile (≤380px) ── */
+        @media (max-width: 380px) {
+          .popup-img-panel { height: 160px; }
+          .popup-content  { padding: 16px 16px 20px; }
+          .popup-title    { font-size: 1.45rem !important; }
+          .popup-stats    { flex-direction: column; gap: 10px; margin-bottom: 20px; }
+          .popup-stat-item { border-left: none !important; padding-left: 0 !important; border-top: 1px solid rgba(255,255,255,0.07); padding-top: 10px; }
+          .popup-stat-item:first-child { border-top: none; padding-top: 0; }
+          .popup-btns     { flex-direction: column; }
+        }
+      `}</style>
+
       <div
         onClick={e => e.stopPropagation()}
+        className="popup-card"
         style={{
-          width: 560,
-          maxWidth: "100%",
           background: C.deep,
-          borderRadius: 32,
           overflow: "hidden",
           boxShadow: "0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.07)",
           transform: visible ? "translateY(0) scale(1)" : "translateY(24px) scale(0.97)",
@@ -72,51 +117,28 @@ export default function FreeCondomPopup() {
       >
 
         {/* ── IMAGE PANEL ── */}
-        <div style={{
-          width: "100%",
-          height: 300,
-          background: C.forest,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          position: "relative",
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
-        }}>
-          {/* subtle radial glow */}
-          <div style={{
-            position: "absolute",
-            width: 280, height: 280,
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(200,236,56,0.1) 0%, transparent 70%)",
-            pointerEvents: "none",
-          }} />
+        <div
+          className="popup-img-panel"
+          style={{
+            background: C.forest,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            position: "relative",
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
+          }}
+        >
+          {/* Radial glow */}
+          <div style={{ position: "absolute", width: 280, height: 280, borderRadius: "50%", background: "radial-gradient(circle, rgba(200,236,56,0.1) 0%, transparent 70%)", pointerEvents: "none" }} />
 
-          {/* full image, uncropped */}
           <img
             src={condom}
             alt="Free Condom"
-            style={{
-              maxWidth: "65%",
-              maxHeight: "85%",
-              width: "auto",
-              height: "auto",
-              objectFit: "contain",
-              position: "relative",
-              filter: "drop-shadow(0 12px 28px rgba(0,0,0,0.4))",
-            }}
+            style={{ maxWidth: "65%", maxHeight: "85%", width: "auto", height: "auto", objectFit: "contain", position: "relative", filter: "drop-shadow(0 12px 28px rgba(0,0,0,0.4))" }}
           />
 
-          {/* close */}
+          {/* Close */}
           <button
             onClick={close}
-            style={{
-              position: "absolute", top: 16, right: 16,
-              width: 34, height: 34, borderRadius: 10,
-              background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.1)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              cursor: "pointer", color: "rgba(255,255,255,0.6)",
-              transition: "all 0.18s ease",
-            }}
+            style={{ position: "absolute", top: 14, right: 14, width: 34, height: 34, borderRadius: 10, background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "rgba(255,255,255,0.6)", transition: "all 0.18s ease" }}
             onMouseEnter={e => { e.currentTarget.style.background = "rgba(0,0,0,0.55)"; e.currentTarget.style.color = C.white; }}
             onMouseLeave={e => { e.currentTarget.style.background = "rgba(0,0,0,0.3)"; e.currentTarget.style.color = "rgba(255,255,255,0.6)"; }}
           >
@@ -124,90 +146,57 @@ export default function FreeCondomPopup() {
           </button>
 
           {/* FREE badge */}
-          <div style={{
-            position: "absolute", top: 16, left: 16,
-            background: C.lime, color: C.ink,
-            fontSize: "0.65rem", fontWeight: 800,
-            letterSpacing: "0.14em", textTransform: "uppercase",
-            padding: "5px 12px", borderRadius: 100,
-          }}>
+          <div style={{ position: "absolute", top: 14, left: 14, background: C.lime, color: C.ink, fontSize: "0.65rem", fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", padding: "5px 12px", borderRadius: 100 }}>
             Free
           </div>
         </div>
 
         {/* ── CONTENT ── */}
-        <div style={{ padding: "28px 32px 32px" }}>
+        <div className="popup-content">
 
-          {/* eyebrow */}
+          {/* Eyebrow */}
           <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 12 }}>
             <div style={{ width: 14, height: 2, background: C.lime, borderRadius: 2 }} />
-            <span style={{
-              fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.16em",
-              textTransform: "uppercase", color: "rgba(200,236,56,0.5)",
-            }}>
+            <span style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(200,236,56,0.5)" }}>
               Baguio City Health Services
             </span>
           </div>
 
-          {/* title */}
-          <h2 style={{
-            margin: "0 0 10px",
-            fontSize: "2.2rem", fontWeight: 900,
-            letterSpacing: "-0.05em", lineHeight: 1,
-            color: C.white,
-          }}>
+          {/* Title */}
+          <h2 className="popup-title" style={{ margin: "0 0 10px", fontWeight: 900, letterSpacing: "-0.05em", lineHeight: 1, color: C.white }}>
             Free Condoms<br />
             <span style={{ color: C.lime }}>Available Now</span>
           </h2>
 
-          {/* body */}
-          <p style={{
-            margin: "0 0 24px",
-            fontSize: "0.88rem", lineHeight: 1.7,
-            color: "rgba(255,255,255,0.5)",
-          }}>
+          {/* Body */}
+          <p style={{ margin: "0 0 20px", fontSize: "0.88rem", lineHeight: 1.7, color: "rgba(255,255,255,0.5)" }}>
             Pick up free condoms at any Baguio City Health Center. No prescription, no judgment — just protection for you and your partner.
           </p>
 
-          {/* divider */}
-          <div style={{ height: 1, background: "rgba(255,255,255,0.07)", marginBottom: 24 }} />
+          {/* Divider */}
+          <div style={{ height: 1, background: "rgba(255,255,255,0.07)", marginBottom: 20 }} />
 
-          {/* stats row */}
-          <div style={{ display: "flex", gap: 0, marginBottom: 28 }}>
+          {/* Stats */}
+          <div className="popup-stats">
             {[
               { value: "HIV",  label: "Prevention"    },
               { value: "STIs", label: "Protection"    },
               { value: "100%", label: "Free of charge" },
             ].map(({ value, label }, i) => (
-              <div key={label} style={{
-                flex: 1,
-                borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.07)" : "none",
-                paddingLeft: i > 0 ? 20 : 0,
-              }}>
-                <p style={{ margin: "0 0 2px", fontSize: "1.1rem", fontWeight: 900, color: C.lime, letterSpacing: "-0.03em" }}>
-                  {value}
-                </p>
-                <p style={{ margin: 0, fontSize: "0.72rem", color: "rgba(255,255,255,0.38)", fontWeight: 500 }}>
-                  {label}
-                </p>
+              <div key={label} className="popup-stat-item" style={{ flex: 1, borderLeft: i > 0 ? "1px solid rgba(255,255,255,0.07)" : "none", paddingLeft: i > 0 ? 20 : 0 }}>
+                <p style={{ margin: "0 0 2px", fontSize: "1.1rem", fontWeight: 900, color: C.lime, letterSpacing: "-0.03em" }}>{value}</p>
+                <p style={{ margin: 0, fontSize: "0.72rem", color: "rgba(255,255,255,0.38)", fontWeight: 500 }}>{label}</p>
               </div>
             ))}
           </div>
 
-          {/* buttons */}
-          <div style={{ display: "flex", gap: 10 }}>
+          {/* Buttons */}
+          <div className="popup-btns">
             <a
               href="https://www.cdc.gov/hiv/prevention/condoms.html"
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                flex: 1,
-                display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
-                padding: "14px 22px", borderRadius: 14,
-                background: C.lime, color: C.ink,
-                fontSize: "0.88rem", fontWeight: 700, textDecoration: "none",
-                transition: "all 0.18s ease",
-              }}
+              style={{ flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "14px 22px", borderRadius: 14, background: C.lime, color: C.ink, fontSize: "0.88rem", fontWeight: 700, textDecoration: "none", transition: "all 0.18s ease" }}
               onMouseEnter={e => { e.currentTarget.style.background = "#d4f04a"; e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(200,236,56,0.28)"; }}
               onMouseLeave={e => { e.currentTarget.style.background = C.lime; e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}
             >
@@ -216,14 +205,7 @@ export default function FreeCondomPopup() {
 
             <button
               onClick={close}
-              style={{
-                padding: "14px 22px", borderRadius: 14,
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.09)",
-                color: "rgba(255,255,255,0.4)",
-                fontSize: "0.88rem", fontWeight: 600, cursor: "pointer",
-                transition: "all 0.18s ease",
-              }}
+              style={{ padding: "14px 22px", borderRadius: 14, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", color: "rgba(255,255,255,0.4)", fontSize: "0.88rem", fontWeight: 600, cursor: "pointer", transition: "all 0.18s ease" }}
               onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.09)"; e.currentTarget.style.color = C.white; }}
               onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.color = "rgba(255,255,255,0.4)"; }}
             >
